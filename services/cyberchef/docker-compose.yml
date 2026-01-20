@@ -1,0 +1,5 @@
+services:
+  cyberchef:
+    image: ghcr.io/gchq/cyberchef:latest
+    ports:
+      - "8080:80"

@@ -1,0 +1,65 @@
+# Caddy's configuration file
+# see: https://caddyserver.com/docs/caddyfile
+# Gitea
+gitea.homelab.lan {
+        tls internal
+        reverse_proxy {LXC-IP}:3000
+}
+
+komga.homelab.lan {
+        tls internal
+        reverse_proxy {LXC-IP}:25600
+}
+
+immich.homelab.lan {
+    tls internal
+    reverse_proxy {LXC-IP}:2283
+}
+
+truenas.homelab.lan {
+    tls internal
+    reverse_proxy {LXC-IP}
+}
+
+pihole.homelab.lan {
+    tls internal
+    reverse_proxy {LXC-IP}
+}
+
+suwayomi.homelab.lan {
+    tls internal
+    reverse_proxy {LXC-IP}:4567
+}
+
+authentik.homelab.lan {
+    tls internal
+    reverse_proxy {LXC-IP}:9000 
+}
+
+nextcloud.homelab.lan {
+    tls internal
+    reverse_proxy {LXC-IP}:8080
+}
+
+qbittorrent.homelab.lan {
+    tls internal
+    reverse_proxy {LXC-IP}:8080 
+}
+
+kiwix.homelab.lan {
+    tls internal
+    reverse_proxy {LXC-IP}:8081 
+    basicauth {
+        username HashedCaddyPWD 
+        }
+}
+
+plex.homelab.lan {
+    tls internal
+    reverse_proxy {LXC-IP}:8096 
+}
+
+cyberchef.homelab.lan {
+    tls internal
+    reverse_proxy {LXC-IP}:8080
+}

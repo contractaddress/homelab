@@ -1,0 +1,48 @@
+services:
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      - VPN_SERVICE_PROVIDER=mullvad
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=${wireguard_PK}
+      - WIREGUARD_ADDRESSES=${wireguard_address}
+      - SERVER_CITIES=${wireguard_city}
+      - TZ=Etc/UTC
+    ports:
+      - "4567:4567"   # Suwayomi Web UI
+    restart: unless-stopped
+
+  suwayomi:
+    image: ghcr.io/suwayomi/suwayomi-server:preview
+    container_name: suwayomi
+    user: suwayomi
+    group_add:
+      - "10000"
+    depends_on:
+      - gluetun
+    network_mode: "service:gluetun"
+    environment:
+      - PUID=0
+      - PGID=10000
+      - TZ=Etc/UTC
+      - FLARESOLVERR_ENABLED=true
+      - FLARESOLVERR_URL=http://localhost:8191
+    volumes:
+      - /mnt/manga/Suwayomi:/home/suwayomi/.local/share/Tachidesk/downloads
+      - ./suwayomi:/home/suwayomi/.local/share/Tachidesk
+    restart: on-failure:3
+
+  flaresolverr:
+    image: ghcr.io/thephaseless/byparr:latest
+    container_name: flaresolverr
+    depends_on:
+      - gluetun
+    network_mode: "service:gluetun"
+    environment:
+      - TZ=Etc/UTC
+    restart: unless-stopped
