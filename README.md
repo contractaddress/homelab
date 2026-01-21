@@ -7,11 +7,11 @@ Welcome to my Homelab repo! Here you can find my Docker composes & Guides for se
 - [Docker composes, configs & more](services/)
 - [Local Domains](#local-domains)
 - [Mounting a NAS dataset in a Proxmox LXC](#mounting-a-nas-dataset-in-a-proxmox-lxc)
+- (MORE SOON)
 
 # **Services in my Homelab**
 
 #### *Proxmox VE*
-
 - **Gitea** - local github
 - **Nextcloud** - local cloud
 - **Immich** - photo/video storage
@@ -30,7 +30,6 @@ Welcome to my Homelab repo! Here you can find my Docker composes & Guides for se
 #### *OpenWrt* - *Router, Network isolation*
 
 #### *TrueNAS* - *Network attached storage*
-
 - 2x4TB - RAID1
 - 1x3TB - STRIP
 - 1x1TB - STRIP
