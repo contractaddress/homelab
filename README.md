@@ -12,24 +12,26 @@ Welcome to my Homelab repo! Here you can find my Docker composes & Guides for se
 # **Services in my Homelab**
 
 #### *Proxmox VE*
-- **Gitea** - local github
-- **Nextcloud** - local cloud
-- **Immich** - photo/video storage
-- **Kiwix** - offline browser
-- **Komga** - manga reading
-- **Suwayomi** - manga downloading
-- **Pihole** -  Local Domains, Adblock
-- **Authentik** - homelab authentication
-- **Caddy** - reverse proxy
-- Qbittorrent & Gluetun - Torrenting
-- **Cyberchef** - digital swiss army knife
-- **Ollama** - Mistral 7B (local LLM)
+
+- [**Gitea**](services/gitea) - local github
+- [**Nextcloud**](services/nextcloud) - local cloud
+- [**Immich**](services/immich) - photo/video storage
+- [**Kiwix**](services/kiwix) - offline browser
+- [**Komga**](services/komga) - manga reading
+- [**Suwayomi**](services/suwayomi) - manga downloading
+- [**Pihole**](services/pihole) -  Local Domains, Adblock
+- [**Authentik**](services/authentik) - homelab authentication
+- [**Caddy**](services/caddy) - reverse proxy
+- [**Qbittorrent & Gluetun**](services/) - Torrenting
+- [**Cyberchef**](services/cyberchef) - digital swiss army knife
+- [**Ollama**](services/) - Mistral 7B (local LLM)
 
 > [!NOTE] Note: All these services are ran in an LXC (mostly Alpine as the backbone)
 
 #### *OpenWrt* - *Router, Network isolation*
 
 #### *TrueNAS* - *Network attached storage*
+
 - 2x4TB - RAID1
 - 1x3TB - STRIP
 - 1x1TB - STRIP
