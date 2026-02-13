@@ -1,0 +1,38 @@
+#Heavier nextcloud compose with mysql & Mounted NAS drive to serve friends and family
+---
+services:
+  nextcloud:
+    image: lscr.io/linuxserver/nextcloud:latest
+    container_name: nextcloud
+    environment:
+      - PUID=10000           # Must match NAS UID
+      - PGID=10000           # Must match NAS GID (LXC_share)
+      - TZ=Etc/UTC
+    volumes:
+      - ~/config:/config     # Persistent Nextcloud config
+      - /mnt/nextcloud:/data # NAS-mounted data directory
+    ports:
+      - 8080:80
+    restart: unless-stopped
+    depends_on:
+      - nextcloud-db
+      - redis
+
+  # MariaDB container for Nextcloud
+  nextcloud-db:
+    image: mariadb:latest
+    container_name: nextcloud-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=
+    volumes:
+      - ~/db_data:/var/lib/mysql  # Local storage for DB
+    restart: unless-stopped
+
+  # Redis for file locking
+  redis:
+    image: redis:alpine
+    container_name: nextcloud-redis
+    restart: unless-stopped
