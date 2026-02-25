@@ -50,7 +50,7 @@ kiwix.homelab.lan {
     tls internal
     reverse_proxy {LXC-IP}:8081 
     basicauth {
-        username HashedCaddyPWD 
+        username <HashedCaddyPWD> 
         }
 }
 

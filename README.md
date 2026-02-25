@@ -5,8 +5,8 @@ Welcome to my Homelab repo! Here you can find my Docker composes & Guides for se
 # Table of Contents
 
 - [Docker composes, configs & more](services/)
-- [Local Domains](#local-domains)
 - [Mounting a NAS dataset in a Proxmox LXC](#mounting-a-nas-dataset-in-a-proxmox-lxc)
+- [Local Domains](#local-domains)
 - (MORE SOON)
 
 # **Services in my Homelab**
@@ -26,7 +26,7 @@ Welcome to my Homelab repo! Here you can find my Docker composes & Guides for se
 - [**Cyberchef**](services/cyberchef) - digital swiss army knife
 - [**Ollama**](services/) - Mistral 7B (local LLM)
 
-> [!NOTE] Note: All these services are ran in an LXC (mostly Alpine as the backbone)
+> [!NOTE] Most of these services are ran in an LXC (mostly Alpine my goat)
 
 #### *OpenWrt* - *Router, Network isolation*
 
@@ -52,13 +52,12 @@ Welcome to my Homelab repo! Here you can find my Docker composes & Guides for se
 
 # Mounting a NAS dataset in a Proxmox LXC
 
-==for this example we will be using an SMB dataset we created in TrueNas named "Manga"==
-%% tip: Look up a recommended record size for the type of media you will store %%
+for this example we will be using an SMB dataset we created in TrueNas named "Manga"  
 
 now the SMB share exists as `//{NAS_IP}/Manga`
 
-We will be using **Proxmox** as a Middle man between the SMB dataset and the LXC
-first lets create a NAS directory in /mnt in our Proxmox VE
+We will be using **Proxmox** as a Middle man between the SMB dataset and the LXC.  
+So lets start by creating a NAS directory in /mnt in our Proxmox VE.
 
 ```
 mkdir -p /mnt/nas/manga
@@ -82,7 +81,7 @@ mkdir -p /mnt/manga
 
 ### ==*Mounting the SMB dataset to Proxmox host*==
 
-Now back in the proxmox VE shell lets edit the fstab (NOT the LXC)
+Now back in the proxmox VE shell lets edit the fstab (NOT in the LXC)
 
 ```
 vim /etc/fstab
@@ -93,6 +92,8 @@ add this line at the bottom to connect to and mount the NAS dataset onto our pro
 ```
 //{NAS_IP}/Manga /mnt/nas/manga cifs _netdev,x-systemd.automount,noatime,uid=100000,gid=110000,dir_mode=0770,file_mode=0770,user={USER},pass={PASSWORD} 0 0
 ```
+
+*replace {NAS_IP} with your smb server*
 
 ### ==Mounting the SMB dataset in the LXC==
 
