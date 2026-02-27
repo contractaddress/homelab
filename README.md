@@ -130,3 +130,4 @@ you can now bind it to a volume in a docker compose for example or use it for an
 (Soon...)
 
 ![Alt text](assets/localDNS.excalidraw.png)
+
