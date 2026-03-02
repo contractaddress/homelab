@@ -6,7 +6,7 @@ Welcome to my Homelab repo! Here you can find my Docker composes & Guides for se
 
 - [Docker composes, configs & more](services/)
 - [Mounting a NAS dataset in a Proxmox LXC](#mounting-a-nas-dataset-in-a-proxmox-lxc)
-- [Local Domains](#local-domains)
+- [Local Domains](#Reverse-proxy,-HTTPS-and-local-domains)
 - (MORE SOON)
 
 # **Services in my Homelab**
@@ -123,11 +123,73 @@ you can now bind it to a volume in a docker compose for example or use it for an
 
 ---
 
-# Local domains
+# Reverse proxy, HTTPS and local domains
 
 *There seems to be a lack of guides on local domains especially when using OpenWrt so hopefully this helps...*
-
-(Soon...)
+I'm using OpenWrt as secondary NAT router to isolate the homelab from the rest of my network.
 
 ![Alt text](assets/localDNS.excalidraw.png)
 
+LAN client → service.homelab.lan → Pi-hole resolves to Caddy IP → client connects to Caddy → Caddy makes a secure connection to the LXC and forwards the response to the client
+
+### First set up Pi-hole in your LAN
+
+Pi-hole is a great network-wide adblocker but many people neglect it's ability to also act as a local DNS server. You can use my [docker compose](services/pihole).
+
+We'll come back to Pi-hole later to make some changes in the web UI
+
+### Advertise Openwrt clients to use Pi-hole as a DNS server
+
+i faced issues while trying to do this through the web UI so i recommend SSH'ing into your openwrt
+
+```sh
+ssh {OPENWRT_IP}
+```
+
+open `/etc/dnsmasq.conf` file and add this line at the end:
+
+```sh
+dhcp-option=6,{PI-HOLE IP}
+```
+
+instantly apply changes
+
+```sh
+/etc/init.d/dnsmasq restart
+```
+
+All clients connected to OpenWrt will use Pi-hole for DNS, so the native ad-blocking works immediately, even before configuring Caddy or local domains.
+
+You may have issues with windows devices, so manually set the DNS server to pihole if necessary.
+
+### Caddy for the reverse proxy and HTTPS
+
+You can find a quick guide on setting up Caddy for alpine [here](services/caddy)
+
+for this guide as we are in a trusted environment so TLS internal is good enough.
+
+```yml
+# example of a reverse proxy in your caddy file 
+
+service.homelab.lan {
+    tls internal
+    reverse_proxy {LXC-IP}:8080 # LXC ip refers to the ip of where the service is running
+```
+
+### Final steps in Pi-hole's WebUI
+
+Access Pi-hole and configure upstream DNS to openwrt (or another server if you prefer)
+
+![pihole1](assets/pihole1.png)
+
+head to **settings -> Local DNS record**. Add a DNS record with your domain of choice and make it point to Caddy's IP.
+
+Now for each service you can add a CNAME as shown in the screenshot below
+
+![pihole2](assets/pihole2.png)
+tips:
+
+- chose a TLD that cannot exist: `.lan` `.home` `.local` `.lab`
+- install the Caddy root certificate and install it on the browser you use to browse your homelab
+
+#### Done! now we can access <https://service.homelab.lan> in our browser
