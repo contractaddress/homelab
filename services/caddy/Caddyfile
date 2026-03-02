@@ -1,6 +1,5 @@
 # Caddy's configuration file
 # see: https://caddyserver.com/docs/caddyfile
-# Gitea
 gitea.homelab.lan {
         tls internal
         reverse_proxy {LXC-IP}:3000
@@ -60,6 +59,21 @@ plex.homelab.lan {
 }
 
 cyberchef.homelab.lan {
+    tls internal
+    reverse_proxy {LXC-IP}:8080
+}
+
+kavita.homelab.lan {
+    tls internal
+    reverse_proxy {LXC-IP}:5000
+}
+
+n8n.homelab.lan {
+    tls internal
+    reverse_proxy {LXC-IP}:5678
+}
+
+vaultwarden.homelab.lan {
     tls internal
     reverse_proxy {LXC-IP}:8080
 }
