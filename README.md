@@ -6,7 +6,7 @@ Welcome to my Homelab repo! Here you can find my Docker composes & Guides for se
 
 - [Docker composes, configs & more](services/)
 - [Mounting a NAS dataset in a Proxmox LXC](#mounting-a-nas-dataset-in-a-proxmox-lxc)
-- [Local Domains](#Reverse-proxy,-HTTPS-and-local-domains)
+- [Local Domains](#reverse-proxy-https-and-local-domains)
 - (MORE SOON)
 
 # **Services in my Homelab**
@@ -24,6 +24,8 @@ Welcome to my Homelab repo! Here you can find my Docker composes & Guides for se
 - [**Caddy**](services/caddy) - reverse proxy
 - [**Qbittorrent & Gluetun**](services/) - Torrenting
 - [**Cyberchef**](services/cyberchef) - digital swiss army knife
+- [**n8n**](services/n8n) - workflow automation
+- [**Vaultwarden**](services/vaultwarden) - local password manager
 - [**Ollama**](services/) - Mistral 7B (local LLM)
 
 > [!NOTE] Most of these services are ran in an LXC (mostly Alpine my goat)
@@ -123,7 +125,7 @@ you can now bind it to a volume in a docker compose for example or use it for an
 
 ---
 
-# Reverse proxy, HTTPS and local domains
+# Reverse proxy HTTPS and local domains
 
 *There seems to be a lack of guides on local domains especially when using OpenWrt so hopefully this helps...*
 I'm using OpenWrt as secondary NAT router to isolate the homelab from the rest of my network.
