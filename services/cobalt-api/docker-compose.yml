@@ -1,0 +1,28 @@
+services:
+    cobalt:
+        image: ghcr.io/imputnet/cobalt:11
+        init: true
+        read_only: true
+        restart: unless-stopped
+        container_name: cobalt
+        ports:
+            - 9000:9000/tcp
+        environment:
+            API_URL: "https://cobalt.homelab.lan/"
+            CORS_WILDCARD: "1"
+            YOUTUBE_SESSION_SERVER: "http://yt-session-generator:3000"
+        labels:
+            - com.centurylinklabs.watchtower.scope=cobalt
+    watchtower:
+        image: ghcr.io/containrrr/watchtower
+        restart: unless-stopped
+        command: --cleanup --scope cobalt --interval 900 --include-restarting
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+    #yt-session-generator:
+        #image: ghcr.io/imputnet/yt-session-generator:webserver
+        #init: true
+        #restart: unless-stopped
+        #container_name: yt-session-generator
+        #labels:
+            #- com.centurylinklabs.watchtower.scope=cobalt
