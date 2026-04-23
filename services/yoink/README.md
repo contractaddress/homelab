@@ -3,4 +3,4 @@
 
 not available yet while i make it not slop
 
-![yoink](../assets/yoink.png)
+![yoink](../../assets/yoink.png)
