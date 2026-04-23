@@ -26,6 +26,8 @@ Welcome to my Homelab repo! Here you can find my Docker composes & Guides for se
 - [**Cyberchef**](services/cyberchef) - digital swiss army knife
 - [**n8n**](services/n8n) - workflow automation
 - [**Vaultwarden**](services/vaultwarden) - local password manager
+- [**Cobalt**](services/cobalt-api)
+- [**Linkwarden**](services/linkwarden)
 - [**Ollama**](services/) - Mistral 7B (local LLM)
 
 > [!NOTE] Most of these services are ran in an LXC (mostly Alpine my goat)
